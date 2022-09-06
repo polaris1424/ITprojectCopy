@@ -11,18 +11,19 @@ const videoStorage = multer.diskStorage({
         const token = request.token;
         const filename = `${token._id.toString()}-${id}`;
         request.filename = filename;
-        cb(nul, filename)
+        cb(null, filename)
 
     }
 
 })
 
+//video upload
 export const videoUpload = multer({
     storage:videoStorage,
     limits:{
         fieldSize: 90000000*5 //10 MB   
     },
-    fileFilter:(request, file, cd)=>{
+    fileFilter:(request, file, cb)=>{
         if(!file.originalname.match(/\.(mp4|MPEG-4|mkv)$/)){
             return cb(new Error('Video fomat nor supported'))
         }
